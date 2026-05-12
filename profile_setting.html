@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Agent Number</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="assets/css/ready.css">
+	<link rel="stylesheet" href="assets/css/demo.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+
+	<style>
+		.action-list li {
+			display: inline-block;
+			margin: 0 5px;
+		}
+
+
+		td a {
+			color: #750f0f;
+			font-size: 15px;
+			position: relative;
+			z-index: 1;
+			transition: all 0.3s ease 0s;
+			margin: 0 5px;
+		}
+
+		a:hover {
+			text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.3);
+		}
+
+		a:before,
+		a:after {
+			content: attr(data-tip);
+			color: #fff;
+			background-color: #111;
+			font-size: 12px;
+			padding: 5px 7px;
+			border-radius: 4px;
+			text-transform: capitalize;
+			display: none;
+			transform: translateX(-50%);
+			position: absolute;
+			left: 50%;
+			top: -32px;
+			transition: all 0.3s ease 0s;
+		}
+
+
+
+
+		#pagination {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px;
+			background-color: whitesmoke;
+			font-weight: bold;
+			font-family: sans-serif;
+			font-size: 14px;
+		}
+
+		#pagination a {
+			color: black;
+			float: left;
+			padding: 9px 9px;
+			margin: 3px;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		#pagination a.active {
+			border-radius: 50%;
+			background-color: #4c4a4a;
+			color: whitesmoke;
+		}
+
+		#pageNumbersContainer {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		#pageNumbers {
+			display: flex;
+			padding: 2px;
+		}
+
+		input[type=number] {
+			width: 40px;
+			height: 25px;
+			border: 1px solid lightgray;
+			text-align: center;
+			margin: 5px;
+			border-radius: 5px;
+			outline: none;
+		}
+
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		#goToPage {
+			display: flex;
+			align-items: center;
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+
+		#goToPage button {
+
+			padding: 10px;
+			align-items: center;
+			font-weight: bold;
+			border: none;
+			border-radius: 4px;
+			background-color: #4c4a4a;
+			color: whitesmoke;
+			cursor: pointer;
+		}
+
+		#entriesDisplayDiv {
+			display: flex;
+			padding-left: 25px;
+		}
+
+		#entriesDisplayDiv span {
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+
+		.btn {
+			border: none;
+			background-color: inherit;
+			padding: 14px 28px;
+			font-size: 16px;
+			cursor: pointer;
+			display: inline-block;
+		}
+
+		.danger {
+			color: red;
+			font-weight: bold;
+		}
+
+		.form-control2 {
+			display: block;
+			width: 100%;
+
+			font-size: 1rem;
+
+			color: #495057;
+
+			background-clip: padding-box;
+			border: 1px solid #ffffff;
+			border-radius: .25rem;
+			transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+		}
+
+		.nidimg {
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			padding: 5px;
+			width: 165px;
+			height: 130px;
+		}
+
+		.button {
+
+			top: 50%;
+			background-color: #0a0a23;
+			color: #fff;
+			border: none;
+			border-radius: 10px;
+			padding: 10px;
+			min-height: 30px;
+			min-width: 120px;
+		}
+
+		.button:focus {
+			outline-color: transparent;
+			outline-style: solid;
+			box-shadow: 0 0 0 4px #5a01a7;
+		}
+
+		.abc {
+			color: #4ad9c4;
+		}
+	</style>
+</head>
+
+
+
+
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="index.html" class="logo">
+					Ready Dashboard
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+
+					<form class="navbar-left navbar-form nav-search mr-md-3" action="" id="frm">
+						<div class="input-group">
+							<input type="text" placeholder="Search ..." class="form-control" onkeyup="myFunction()"
+								id="myInput">
+
+							<div class="input-group-append">
+								<span class="input-group-text">
+									<i class="la la-search search-icon"></i>
+								</span>
+							</div>
+						</div>
+					</form>
+					<p class="btn danger" id="clos" style="display: none; " onClick="myclose()">Close</p>
+					<p style="margin-top: 5px;font-weight: bold;" class="logo" id="user"></p>
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown hidden-caret">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="la la-envelope"></i>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="#">Action</a>
+								<a class="dropdown-item" href="#">Another action</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown hidden-caret">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="la la-bell"></i>
+
+							</a>
+
+						</li>
+                        <li class="nav-item dropdown">
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/WhatsApp_Image_2025-06-15_at_5.22.21_PM-removebg-preview.png" alt="user-img" width="36" class="img-circle"><span>Super Admin</span> </a>
+							<ul class="dropdown-menu dropdown-user">
+								<li>
+									<div class="user-box">
+										<div class="u-img"><img src="assets/img/WhatsApp_Image_2025-06-15_at_5.22.21_PM-removebg-preview.png" alt="user"></div>
+										<div class="u-text">
+											<h4>Super Admin</h4>
+											<p class="text-muted">hello@themekita.com</p>
+											<a href="profile_setting.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+										</div>
+									</li>
+			
+								</ul>
+								<!-- /.dropdown-user -->
+							</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="sidebar">
+			<div class="scrollbar-inner sidebar-wrapper">
+				<div class="user">
+					<div class="photo" >
+						<img src="assets/img/WhatsApp_Image_2025-06-15_at_5.22.21_PM-removebg-preview.png">
+					</div>
+					<div class="info">
+						<a class="" data-toggle="collapse" href="" aria-expanded="true">
+							<span>
+								Admin
+								<span class="user-level">Administrator</span>
+								<span class="caret"></span>
+							</span>
+						</a>
+						<div class="clearfix"></div>
+
+
+					</div>
+				</div>
+				<ul class="nav">
+					<li class="nav-item">
+						<a href="dashboard.html">
+							<i class="la la-dashboard"></i>
+							<p>Dashboard</p>
+
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="system_settings.html">
+							<i class="la la-gear"></i>
+							<p>System Settings</p>
+
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="user.html">
+							<i class="la la-user"></i>
+							<p>User Management</p>
+
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="loan_management.html">
+							<i class="la la-bank"></i>
+							<p>Loan List</p>
+
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a href="wallet_management.html">
+							<i class="la la-server"></i>
+							<p>Wallet Management</p>
+
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="agent_number.html">
+							<i class="la la-mobile-phone"></i>
+							<p>Mobile Agent</p>
+
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="recharge.html">
+							<i class="la la-money"></i>
+							<p>Mobile Recharge</p>
+
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="withdraw.html">
+							<i class="la la-university"></i>
+							<p>Withdraw</p>
+
+						</a>
+					</li>
+				
+				
+					<li class="nav-item">
+						<a href="aggrement.html">
+							<i class="la la-table"></i>
+							<p>Aggrement</p>
+
+						</a>
+					</li>
+
+
+					<li class="nav-item">
+						<a href="customer.html">
+							<i class="la la-table"></i>
+							<p>Customer Care</p>
+
+						</a>
+					</li>
+
+
+					<li class="nav-item  active">
+						<a href="profile_setting.html">
+							<i class="la la-male"></i>
+							<p>Profile Setting</p>
+
+						</a>
+					</li>
+
+
+					<li class="nav-item">
+						<a href="admin_user.html">
+							<i class="la la-user"></i>
+							<p>Sub Admin List</p>
+
+						</a>
+					</li>
+
+
+
+
+
+
+				</li>
+			
+
+
+				<li class="nav-item">
+					<a href="">
+						
+						<p></p>
+
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a href="">
+					
+						<p></p>
+
+					</a>
+				</li>
+
+
+				
+
+
+				</ul>
+			</div>
+		</div>
+		<div class="main-panel" id="mainp">
+			<div class="content">
+
+
+
+				<div class="card">
+
+					<div class="card-body">
+
+
+
+						<table class="table table-bordered table-bordered-bd-warning mt-4">
+
+							<tbody>
+
+								<tr>
+									<td style="width: 20%;font-weight: bold;font-size: 14px;">Admin User Name</td>
+									<td colspan="4" id="phone"><input type="text" class="form-control2" id="bkas"
+											placeholder="Enter user name"></td>
+
+								</tr>
+								<tr>
+									<td style="width: 20%;font-weight: bold;font-size: 14px;">Password</td>
+									<td colspan="4" style="height: 30px;"><input type="text" class="form-control2"
+											id="nog" placeholder="Enter Password"></td>
+
+								</tr>
+								
+
+								<tr>
+									<td style="font-weight: bold;font-size: 16px;"></td>
+									<td colspan="4" style="height: 30px;"><button type="button" class="button" id="sub"
+											onclick="validate()" style="margin-left: 30%;">Submit Data</button></td>
+
+								</tr>
+
+
+
+
+							</tbody>
+						</table>
+
+
+					</div>
+				</div>
+
+
+
+			</div>
+			<footer class="footer">
+				<div class="container-fluid">
+					<nav class="pull-left">
+						<ul class="nav">
+							<li class="nav-item">
+								<a class="nav-link" href="http://www.themekita.com">
+									ThemeKita
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+									Help
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="https://themewagon.com/license/#free-item">
+									Licenses
+								</a>
+							</li>
+						</ul>
+					</nav>
+					<div class="copyright ml-auto">
+						2018, made with <i class="la la-heart heart text-danger"></i> by <a
+							href="http://www.themekita.com">ThemeKita</a>
+					</div>
+				</div>
+			</footer>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+	</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
+					<p>
+						<b>We'll let you know when it's done</b>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+
+<script src="assets/js/profile_setting.js"></script>
+
+
+<script src="assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugin/chartist/chartist.min.js"></script>
+<script src="assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
+<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+<script src="assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
+<script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+<script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="assets/js/ready.min.js"></script>
+
+
+<script>
+	$(document).ready(function(){
+
+var username = sessionStorage.getItem("username");
+console.log(username);
+
+if(username == null){
+window.location = "index.html";
+}
+
+});
+</script>
+</html>
